@@ -4,9 +4,11 @@ import Controller.AppController
 import Controller.ControllerInterface
 import Model.Bmp24Model
 import Model.Bmp32Model
+import Model.Bmp8Model
 import Model.ModelInterface
 import Painters.Bmp24Painter
 import Painters.Bmp32Painter
+import Painters.Bmp8Painter
 import Painters.Painter
 import java.awt.event.ActionListener
 import com.sun.java.accessibility.util.AWTEventMonitor.addActionListener
@@ -69,6 +71,9 @@ class AppViewer(title: String?) : ViewInterface, JFrame(title) {
             remove(painter)
 
         when (model) {
+            is Bmp8Model ->
+                    painter = Bmp8Painter(model)
+
             is Bmp24Model ->
                     painter = Bmp24Painter(model)
 
