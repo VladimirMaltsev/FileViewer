@@ -10,7 +10,11 @@ class Bmp24Model : ModelInterface{
     override var size: Int = 0
     override var bytesForPixel: Int = 0
     override var pixelStartIndex: Int = 0
+    override var countColorsInTable: Int = 0
     override var pixelArray: ByteArray? = null
+    override var colorTable: ByteArray?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
 
     override var observers: ArrayList<Observer> = ArrayList()
 

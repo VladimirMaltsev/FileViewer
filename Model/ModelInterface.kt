@@ -7,6 +7,8 @@ interface ModelInterface: Observable {
     var size : Int
     var bytesForPixel : Int
     var pixelStartIndex : Int
+    var countColorsInTable : Int
+    var colorTable: ByteArray?
     var pixelArray: ByteArray?
 
 
