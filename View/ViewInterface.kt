@@ -10,8 +10,6 @@ interface ViewInterface : Observer{
     var model : ModelInterface?
     var controller : ControllerInterface?
     var painter : Painter?
-    var frame : JFrame
-
 
     fun repaint()
 }

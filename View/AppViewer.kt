@@ -16,45 +16,46 @@ import javax.swing.*
 import javax.swing.Box.createVerticalBox
 import javax.swing.BoxLayout
 import javax.swing.border.EmptyBorder
+import java.awt.GridBagConstraints
 
 
-class AppViewer : ViewInterface {
+
+
+class AppViewer(title: String?) : ViewInterface, JFrame(title) {
 
     override var model: ModelInterface? = null
     override var controller: ControllerInterface? = null
     override var painter: Painter? = null
-    override var frame = JFrame("FileViewer")
 
     init {
-        frame.setBounds(50, 50, 1000, 700)
-        frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        frame.layout = GridBagLayout()
+        //задаем размеры нашему окну
+        setBounds(50, 50, 1000, 700)
+        defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+        contentPane.layout = GridBagLayout()
 
         var menuBar = JMenuBar()
         var menuFile = JMenu("File")
 
         var openFileItem = JMenuItem("Open...")
         menuFile.add(openFileItem)
-        openFileItem.addActionListener(object : ActionListener{
-            override fun actionPerformed(e: ActionEvent?) {
-                var fileChooser = JFileChooser()
-                fileChooser.showDialog(frame, "open")
-                var file = fileChooser.selectedFile
-                if (file != null)
-                    read(file.absolutePath)
-            }
 
-        })
+        openFileItem.addActionListener {
+            var fileChooser = JFileChooser()
+            fileChooser.showDialog(this, "open")
+            var file = fileChooser.selectedFile
+            if (file != null)
+                read(file.absolutePath)
+        }
 
         menuBar.add(menuFile)
+        jMenuBar = menuBar
 
-        frame.jMenuBar = menuBar
-        frame.isVisible = true
+        isVisible = true
         controller = AppController(this)
     }
 
     override fun repaint() {
-        frame.repaint()
+        repaint()
     }
 
     fun read(file: String) {
@@ -62,8 +63,11 @@ class AppViewer : ViewInterface {
     }
 
     override fun update(model: ModelInterface) {
+
+        //если на фрейме уже есть художник, то увольняем его
         if (painter != null)
-            frame.remove(painter)
+            remove(painter)
+
         when (model) {
             is Bmp24Model ->
                     painter = Bmp24Painter(model)
@@ -73,8 +77,24 @@ class AppViewer : ViewInterface {
 
         }
 
-        frame.add(painter)
-        frame.isVisible = true
-        //this.repaint()
+        painter!!.setSize(model.width, model.height)
+
+        val cns = getGridBagConstraints()
+        contentPane.add(painter, cns)
+
+        isVisible = true
+    }
+
+    fun getGridBagConstraints() : GridBagConstraints{
+        val cns = GridBagConstraints()
+
+        cns.weightx = 1.0
+        cns.weighty = 1.0
+
+        cns.ipadx = painter!!.width
+        cns.ipady = painter!!.height
+
+        cns.anchor = GridBagConstraints.CENTER
+        return cns
     }
 }
