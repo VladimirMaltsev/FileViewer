@@ -2,13 +2,14 @@ package Painters
 
 import Model.Bmp24Model
 import Model.Bmp32Model
+import Model.ModelInterface
 import java.awt.Color
 import java.awt.Graphics
 
 /**
  * Created by Вдадимир on 30.04.2017.
  */
-class Bmp32Painter(model: Bmp32Model) : Painter(model){
+class Bmp32Painter(model: ModelInterface) : Painter(model){
 
     override fun paintComponent(g: Graphics?) {
         super.paintComponent(g)

@@ -1,10 +1,11 @@
 package Painters
 
 import Model.Bmp24Model
+import Model.ModelInterface
 import java.awt.Color
 import java.awt.Graphics
 
-class Bmp24Painter(model: Bmp24Model) : Painter(model){
+class Bmp24Painter(model: ModelInterface) : Painter(model){
 
     override fun paintComponent(g: Graphics?) {
         super.paintComponent(g)
@@ -18,6 +19,7 @@ class Bmp24Painter(model: Bmp24Model) : Painter(model){
 
         for (i in 0..model.height - 1) {
             for (j in model.width - 1 downTo 0) {
+
                 var red = model.pixelArray!![ind --].toInt()
                 if (red < 0)
                     red += 256
