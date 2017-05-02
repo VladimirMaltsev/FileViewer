@@ -10,14 +10,8 @@ import Painters.Bmp24Painter
 import Painters.Bmp32Painter
 import Painters.Bmp8Painter
 import Painters.Painter
-import java.awt.event.ActionListener
-import com.sun.java.accessibility.util.AWTEventMonitor.addActionListener
 import java.awt.*
-import java.awt.event.ActionEvent
 import javax.swing.*
-import javax.swing.Box.createVerticalBox
-import javax.swing.BoxLayout
-import javax.swing.border.EmptyBorder
 import java.awt.GridBagConstraints
 
 
@@ -46,7 +40,7 @@ class AppViewer(title: String?) : ViewInterface, JFrame(title) {
             fileChooser.showDialog(this, "open")
             var file = fileChooser.selectedFile
             if (file != null)
-                read(file.absolutePath)
+                controller!!.readFile(file.absolutePath)
         }
 
         menuBar.add(menuFile)
@@ -56,13 +50,6 @@ class AppViewer(title: String?) : ViewInterface, JFrame(title) {
         controller = AppController(this)
     }
 
-    override fun repaint() {
-        repaint()
-    }
-
-    fun read(file: String) {
-        controller!!.setData(file)
-    }
 
     override fun update(model: ModelInterface) {
 
@@ -80,6 +67,8 @@ class AppViewer(title: String?) : ViewInterface, JFrame(title) {
             is Bmp32Model ->
                     painter = Bmp32Painter(model)
 
+            else ->
+                    println("unsupported format")
         }
 
         painter!!.setSize(model.width, model.height)
@@ -87,6 +76,7 @@ class AppViewer(title: String?) : ViewInterface, JFrame(title) {
         val cns = getGridBagConstraints()
         contentPane.add(painter, cns)
 
+        repaint()
         isVisible = true
     }
 

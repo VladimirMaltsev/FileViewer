@@ -23,7 +23,7 @@ class Bmp8Painter (model: ModelInterface) : Painter(model){
             for (j in model.width - 1 downTo 0) {
 
                 var col = model.pixelArray!![ind --].toInt()
-                
+
                 if (col < 0) {
                     col += 256
                 }

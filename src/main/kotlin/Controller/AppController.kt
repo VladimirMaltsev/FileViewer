@@ -11,8 +11,10 @@ import java.io.IOException
 class AppController (override var view: ViewInterface,
                      override var model : ModelInterface = Bmp24Model()) : ControllerInterface{
 
-    override fun setData(file : String){
+    override fun readFile(file : String){
+
         var streamIn : FileInputStream
+
         try { streamIn = FileInputStream(file) }
         catch (e : IOException) {
             println("file not found")
@@ -29,6 +31,7 @@ class AppController (override var view: ViewInterface,
         print(type)
 
         when (type) {
+
             "BM" -> {
                 when (data[0x1C].toInt()) {
 
@@ -43,6 +46,11 @@ class AppController (override var view: ViewInterface,
                     32 ->
                         if (model !is Bmp32Model)
                             model = Bmp32Model()
+
+                    else -> {
+                        println("unsupported format")
+                        return
+                    }
                 }
             }
         }

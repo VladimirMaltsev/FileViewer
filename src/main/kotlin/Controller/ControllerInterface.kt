@@ -8,7 +8,7 @@ interface ControllerInterface {
     var model : ModelInterface
     var view : ViewInterface
 
-    fun setData(file : String)
+    fun readFile(file : String)
 
     fun setModel(data: ByteArray)
 }
