@@ -43,6 +43,8 @@ class Bmp32Painter(model: ModelInterface) : Painter(model){
 
                 g.drawLine(j, i, j, i)
             }
+            while (ind % 4 != 0)
+                ind --
         }
     }
 
