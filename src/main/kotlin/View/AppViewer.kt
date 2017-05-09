@@ -6,10 +6,8 @@ import Model.Bmp24Model
 import Model.Bmp32Model
 import Model.Bmp8Model
 import Model.ModelInterface
-import Painters.Bmp24Painter
-import Painters.Bmp32Painter
-import Painters.Bmp8Painter
-import Painters.Painter
+import View.Painters.*
+import View.Painters.Painter
 import java.awt.*
 import javax.swing.*
 import java.awt.GridBagConstraints
@@ -17,30 +15,42 @@ import java.awt.GridBagConstraints
 
 
 
-class AppViewer(title: String?) : ViewInterface, JFrame(title) {
+class AppViewer(title: String?) : ViewInterface(title){
 
     override var model: ModelInterface? = null
     override var controller: ControllerInterface? = null
     override var painter: Painter? = null
 
     init {
-        //задаем размеры нашему окну
         setBounds(50, 50, 1000, 700)
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         contentPane.layout = GridBagLayout()
 
         var menuBar = JMenuBar()
-        var menuFile = JMenu("File")
+        var menuFile = JMenu("_File_")
 
-        var openFileItem = JMenuItem("Open...")
+        var openFileItem = JMenuItem("[+] Open...")
         menuFile.add(openFileItem)
+        var closeFileItem = JMenuItem("[x] Close")
+        menuFile.add(closeFileItem)
 
+        //вешаем слушателся на пункт меню "open"
         openFileItem.addActionListener {
             var fileChooser = JFileChooser()
             fileChooser.showDialog(this, "open")
+
             var file = fileChooser.selectedFile
-            if (file != null)
+
+            if (file != null) {
                 controller!!.readFile(file.absolutePath)
+            }
+        }
+
+        //вешаем слушателя на кнопку "close"
+        closeFileItem.addActionListener {
+            if (painter != null)
+                this.remove(painter)
+            repaint()
         }
 
         menuBar.add(menuFile)
@@ -53,9 +63,10 @@ class AppViewer(title: String?) : ViewInterface, JFrame(title) {
 
     override fun update(model: ModelInterface) {
 
-        //если на фрейме уже есть художник, то увольняем его
-        if (painter != null)
+        //если у фрейме уже есть художник, то увольняем его
+        if (painter != null )
             remove(painter)
+        repaint()
 
         when (model) {
             is Bmp8Model ->

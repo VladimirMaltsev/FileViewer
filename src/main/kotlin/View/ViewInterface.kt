@@ -2,14 +2,17 @@ package View
 
 import Controller.ControllerInterface
 import Model.ModelInterface
-import Painters.Painter
+import View.Painters.Painter
 import javax.swing.JFrame
+import javax.swing.JOptionPane
 
 
-interface ViewInterface : Observer{
-    var model : ModelInterface?
-    var controller : ControllerInterface?
-    var painter : Painter?
+abstract class ViewInterface(title : String?) : JFrame(title), Observer{
+    abstract var model : ModelInterface?
+    abstract var controller : ControllerInterface?
+    abstract var painter : Painter?
 
-    fun repaint()
+    fun showDialogMessage(message : String){
+        JOptionPane.showMessageDialog(this, message)
+    }
 }
