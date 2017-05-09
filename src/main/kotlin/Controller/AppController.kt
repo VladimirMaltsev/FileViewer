@@ -23,12 +23,21 @@ class AppController (override var view: ViewInterface,
 
         var data : ByteArray = ByteArray(streamIn.available())
         streamIn.read(data)
+
+        var file_extension = file.split(".")[1].subSequence(0, 1)
+        println (file_extension)
+
+        if (file_extension != String(data.copyOfRange(0, 1))) {
+            view.showDialogMessage("Некорректное расширение файла")
+            println("Некорректное расширение файла")
+            return
+        }
+
         setModel(data)
     }
 
     override fun setModel(data: ByteArray) {
         var type : String = String(data.copyOfRange(0, 2))
-        print(type)
 
         when (type) {
 
@@ -47,11 +56,12 @@ class AppController (override var view: ViewInterface,
                         if (model !is Bmp32Model)
                             model = Bmp32Model()
 
-                    else -> {
-                        println("unsupported format")
-                        return
-                    }
                 }
+            }
+            else -> {
+                view.showDialogMessage("unsupported format")
+                println("unsupported format")
+                return
             }
         }
 
