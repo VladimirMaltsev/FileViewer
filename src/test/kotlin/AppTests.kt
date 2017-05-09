@@ -1,9 +1,6 @@
-package View.Painters
-
 import Model.Bmp8Model
 import org.junit.jupiter.api.Assertions.*
 import java.awt.Color
-import java.awt.Image
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.FileInputStream
