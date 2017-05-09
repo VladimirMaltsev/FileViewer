@@ -1,7 +1,5 @@
-package Painters
+package View.Painters
 
-import Model.Bmp24Model
-import Model.Bmp32Model
 import Model.ModelInterface
 import java.awt.Color
 import java.awt.Graphics
@@ -20,8 +18,11 @@ class Bmp32Painter(model: ModelInterface) : Painter(model){
 
         var ind = model.pixelArray!!.size - 1
         println ("Frame repainted BMP32")
-
+        var shift = (ind + 1) / model.height - 4 * model.width
+        println ("shift = $shift")
         for (i in 0..model.height - 1) {
+            ind -= shift
+
             for (j in model.width - 1 downTo 0) {
                 var alpha = model.pixelArray!![ind --].toInt()
                 if (alpha < 0)
@@ -43,8 +44,6 @@ class Bmp32Painter(model: ModelInterface) : Painter(model){
 
                 g.drawLine(j, i, j, i)
             }
-            while (ind % 4 != 0)
-                ind --
         }
     }
 

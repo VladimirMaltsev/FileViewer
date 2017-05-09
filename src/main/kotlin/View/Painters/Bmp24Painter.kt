@@ -1,6 +1,5 @@
-package Painters
+package View.Painters
 
-import Model.Bmp24Model
 import Model.ModelInterface
 import java.awt.Color
 import java.awt.Graphics
@@ -16,8 +15,12 @@ class Bmp24Painter(model: ModelInterface) : Painter(model){
 
         var ind = model.pixelArray!!.size - 1
         println ("Frame repainted BMP24")
+        var shift = (ind + 1) / model.height - 3 * model.width
 
         for (i in 0..model.height - 1) {
+
+            ind -= shift
+
             for (j in model.width - 1 downTo 0) {
 
                 var red = model.pixelArray!![ind --].toInt()
@@ -36,8 +39,7 @@ class Bmp24Painter(model: ModelInterface) : Painter(model){
 
                 g.drawLine(j, i, j, i)
             }
-            while (ind % 4 != 0)
-                ind --
+
         }
     }
 
