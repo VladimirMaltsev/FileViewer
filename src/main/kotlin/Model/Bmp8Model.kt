@@ -2,15 +2,11 @@ package Model
 
 import View.Observer
 
-/**
- * Created by Вдадимир on 30.04.2017.
- */
-class Bmp8Model : ModelInterface{
+class Bmp8Model : ModelInterface {
 
-
+    override var size: Int = 0
     override var height: Int = 0
     override var width: Int = 0
-    override var size: Int = 0
     override var bytesForPixel: Int = 0
     override var pixelStartIndex: Int = 0
     override var countColorsInTable: Int = 0
@@ -31,7 +27,4 @@ class Bmp8Model : ModelInterface{
 
         notifyObservers()
     }
-
-
-
 }

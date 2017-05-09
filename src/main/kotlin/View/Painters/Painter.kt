@@ -1,4 +1,4 @@
-package Painters
+package View.Painters
 
 import Model.ModelInterface
 import javax.swing.JPanel

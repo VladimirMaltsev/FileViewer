@@ -14,8 +14,7 @@ class Bmp24Painter(model: ModelInterface) : Painter(model){
         }
 
         var ind = model.pixelArray!!.size - 1
-        println ("Frame repainted BMP24")
-        var shift = (ind + 1) / model.height - 3 * model.width
+        val shift = (ind + 1) / model.height - 3 * model.width
 
         for (i in 0..model.height - 1) {
 
@@ -34,9 +33,8 @@ class Bmp24Painter(model: ModelInterface) : Painter(model){
                 var blue = model.pixelArray!! [ind --].toInt()
                 if (blue < 0)
                     blue += 256
-                //println ("${image[ind--].toInt() + 128}, ${image[ind--].toInt() + 128}, ${image[ind--].toInt() + 128}")
-                g.color = Color(red, green, blue)
 
+                g.color = Color(red, green, blue)
                 g.drawLine(j, i, j, i)
             }
 

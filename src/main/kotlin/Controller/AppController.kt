@@ -14,8 +14,9 @@ class AppController (override var view: ViewInterface,
     override fun readFile(file : String){
 
         var streamIn : FileInputStream
-
-        try { streamIn = FileInputStream(file) }
+        try {
+            streamIn = FileInputStream(file)
+        }
         catch (e : IOException) {
             println("file not found")
             return
@@ -39,9 +40,10 @@ class AppController (override var view: ViewInterface,
     override fun setModel(data: ByteArray) {
         var type : String = String(data.copyOfRange(0, 2))
 
-        when (type) {
-
-            "BM" -> {
+        when (type)
+        {
+            "BM" ->
+            {
                 when (data[0x1C].toInt()) {
 
                     8 ->
@@ -58,7 +60,8 @@ class AppController (override var view: ViewInterface,
 
                 }
             }
-            else -> {
+            else ->
+            {
                 view.showDialogMessage("unsupported format")
                 println("unsupported format")
                 return

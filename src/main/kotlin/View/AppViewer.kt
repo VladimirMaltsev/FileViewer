@@ -26,20 +26,20 @@ class AppViewer(title: String?) : ViewInterface(title){
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         contentPane.layout = GridBagLayout()
 
-        var menuBar = JMenuBar()
-        var menuFile = JMenu("_File_")
+        val menuBar = JMenuBar()
+        val menuFile = JMenu("_File_")
 
-        var openFileItem = JMenuItem("[+] Open...")
+        val openFileItem = JMenuItem("[+] Open...")
         menuFile.add(openFileItem)
-        var closeFileItem = JMenuItem("[x] Close")
+        val closeFileItem = JMenuItem("[x] Close")
         menuFile.add(closeFileItem)
 
         //вешаем слушателся на пункт меню "open"
-        openFileItem.addActionListener {
-            var fileChooser = JFileChooser()
-            fileChooser.showDialog(this, "open")
+        openFileItem.addActionListener{
 
-            var file = fileChooser.selectedFile
+            val fileChooser = JFileChooser()
+            fileChooser.showDialog(this, "open")
+            val file = fileChooser.selectedFile
 
             if (file != null) {
                 controller!!.readFile(file.absolutePath)
