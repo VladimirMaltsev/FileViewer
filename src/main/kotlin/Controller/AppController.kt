@@ -13,7 +13,7 @@ class AppController (override var view: ViewInterface,
 
     override fun readFile(file : String){
 
-        var streamIn : FileInputStream
+        val streamIn : FileInputStream
         try {
             streamIn = FileInputStream(file)
         }
@@ -25,10 +25,14 @@ class AppController (override var view: ViewInterface,
         var data : ByteArray = ByteArray(streamIn.available())
         streamIn.read(data)
 
-        var file_extension = file.split(".")[1].subSequence(0, 1)
-        println (file_extension)
+        var file_extension = file.split(".")[1].subSequence(0, 2)
+        var file_type = String(data.copyOfRange(0, 2))
 
-        if (file_extension != String(data.copyOfRange(0, 1))) {
+//        println (file_extension)
+//        println (file_type.toLowerCase())
+
+
+        if (file_extension != file_type.toLowerCase()) {
             view.showDialogMessage("Некорректное расширение файла")
             println("Некорректное расширение файла")
             return

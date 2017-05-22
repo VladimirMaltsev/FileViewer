@@ -17,7 +17,7 @@ class Bmp8Painter (model: ModelInterface) : Painter(model){
         }
 
         var ind = model.pixelArray!!.size - 1
-        println ("Frame repainted BMP24")
+
         val shift = (ind + 1) / model.height - model.width
 
         for (i in 0..model.height - 1) {
